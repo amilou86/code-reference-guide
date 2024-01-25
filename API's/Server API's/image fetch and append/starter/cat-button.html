@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>The Magical Cat Button</title>
+</head>
+
+<body>
+  <button id="cat-button">magical cat button</button>
+  <div id="images"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    //
+    $('#cat-button').on('click', function () {
+      //
+      var queryURL =
+        'https://api.giphy.com/v1/gifs/random?api_key=mnHYaITGCe2E7zXh6eldt0w1J9qnyKW9&tag=cats&rating=pg';
+      // API key goes inbetween the ? and &
+      //
+      fetch(queryURL)
+        .then(function (response) {
+          // fetches the stored in the queryURL variable, then runs a function to return (display) the response object
+          return response.json();
+          // json parses (converts) raw data into an JS object so it's readable
+        })
+
+        //
+        .then(function (data) {
+          //function to access the data object
+          var imageUrl = data.data.images.original.url;
+          //  creates a variable to grab the data called 'image' stored in the object and store it as an image
+          // variable which creates an image element
+          var catImage = $('<img>');
+
+          //set the catImage element attribute to the source gabbed in the imageUrl var above
+          catImage.attr('src', imageUrl);
+          // sets an alternate attribute to say 'cat image' for screen readers
+          catImage.attr('alt', 'cat image');
+
+          //prepending the catImage from above and adding it to the images div on html
+          // prepend is like append but adds it to the start of the element, as a first child element
+          $('#images').prepend(catImage);
+        });
+    });
+  </script>
+</body>
+
+</html>
